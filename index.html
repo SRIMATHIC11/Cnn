@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN 3D Visualizer - Interactive Neural Network Demonstration</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-brain"></i> CNN 3D Visualizer</h1>
+                <p>Interactive 3D Visualization of Convolutional Neural Networks</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="controls-section">
+                    <h3><i class="fas fa-cog"></i> Controls</h3>
+                    
+                    <div class="control-group">
+                        <label for="image-select">Select Image:</label>
+                        <select id="image-select">
+                            <option value="digit-3">Handwritten Digit: 3</option>
+                            <option value="digit-7">Handwritten Digit: 7</option>
+                            <option value="cat">Cat Image</option>
+                            <option value="dog">Dog Image</option>
+                            <option value="random">Random Pattern</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="animation-speed">Animation Speed:</label>
+                        <input type="range" id="animation-speed" min="0.1" max="3" step="0.1" value="1">
+                        <span id="speed-value">1.0x</span>
+                    </div>
+
+                    <div class="control-group">
+                        <button id="play-btn" class="btn primary">
+                            <i class="fas fa-play"></i> Start Processing
+                        </button>
+                        <button id="pause-btn" class="btn secondary">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button id="reset-btn" class="btn secondary">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="control-group">
+                        <button id="step-btn" class="btn outline">
+                            <i class="fas fa-step-forward"></i> Step Forward
+                        </button>
+                        <button id="auto-play-btn" class="btn outline">
+                            <i class="fas fa-magic"></i> Auto Play
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Layer Information -->
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Current Layer</h3>
+                    <div id="layer-info">
+                        <div class="layer-details">
+                            <h4 id="current-layer-name">Input Layer</h4>
+                            <p id="current-layer-description">Original image data represented as a 2D grid of pixel values.</p>
+                            <div class="layer-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Shape:</span>
+                                    <span id="layer-shape">16 × 16 × 1</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Parameters:</span>
+                                    <span id="layer-params">0</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Output Size:</span>
+                                    <span id="layer-output">256</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Architecture -->
+                <div class="architecture-section">
+                    <h3><i class="fas fa-sitemap"></i> Network Architecture</h3>
+                    <div class="architecture-steps">
+                        <div class="step active" data-step="0">
+                            <div class="step-icon input-layer"></div>
+                            <span>Input Layer</span>
+                        </div>
+                        <div class="step" data-step="1">
+                            <div class="step-icon conv-layer"></div>
+                            <span>Conv Layer 1</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-icon pool-layer"></div>
+                            <span>Max Pool</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-icon conv-layer"></div>
+                            <span>Conv Layer 2</span>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-icon pool-layer"></div>
+                            <span>Max Pool</span>
+                        </div>
+                        <div class="step" data-step="5">
+                            <div class="step-icon flatten-layer"></div>
+                            <span>Flatten</span>
+                        </div>
+                        <div class="step" data-step="6">
+                            <div class="step-icon dense-layer"></div>
+                            <span>Dense Layer</span>
+                        </div>
+                        <div class="step" data-step="7">
+                            <div class="step-icon output-layer"></div>
+                            <span>Output</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="metrics-section">
+                    <h3><i class="fas fa-chart-bar"></i> Classification Results</h3>
+                    <div class="predictions">
+                        <div class="prediction-item">
+                            <span class="class-name">Cat</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="confidence-value">85%</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="class-name">Dog</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 12%"></div>
+                            </div>
+                            <span class="confidence-value">12%</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="class-name">Bird</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 3%"></div>
+                            </div>
+                            <span class="confidence-value">3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Visualization Canvas -->
+            <div class="visualization-container">
+                <canvas id="three-canvas"></canvas>
+                <div class="canvas-overlay">
+                    <div class="loading-indicator" id="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Initializing 3D Scene...</span>
+                    </div>
+                    <div class="layer-tooltip" id="layer-tooltip">
+                        <h4 id="tooltip-title">Layer Information</h4>
+                        <p id="tooltip-description">Hover over elements for details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 CNN 3D Visualizer. Educational Tool for Understanding Neural Networks.</p>
+                <div class="footer-links">
+                    <a href="#" onclick="showHelp()"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="#" onclick="showAbout()"><i class="fas fa-info"></i> About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-question-circle"></i> How to Use the CNN Visualizer</h2>
+            <div class="help-content">
+                <div class="help-section">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><strong>Select Image:</strong> Choose different input images to see how the CNN processes them</li>
+                        <li><strong>Animation Speed:</strong> Adjust how fast the visualization plays</li>
+                        <li><strong>Start Processing:</strong> Begin the neural network forward pass animation</li>
+                        <li><strong>Step Forward:</strong> Move through the network one layer at a time</li>
+                        <li><strong>Reset:</strong> Return to the initial state</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>Layer Types</h3>
+                    <ul>
+                        <li><strong>Input Layer (Blue):</strong> Original image data as a 2D grid</li>
+                        <li><strong>Convolutional Layer (Green):</strong> Applies filters to detect features</li>
+                        <li><strong>Pooling Layer (Yellow):</strong> Reduces spatial dimensions</li>
+                        <li><strong>Flatten Layer (Purple):</strong> Converts 2D data to 1D vector</li>
+                        <li><strong>Dense Layer (Orange):</strong> Fully connected neural network layer</li>
+                        <li><strong>Output Layer (Red):</strong> Final classification probabilities</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>Interaction</h3>
+                    <ul>
+                        <li><strong>Mouse:</strong> Rotate and zoom the 3D scene</li>
+                        <li><strong>Hover:</strong> Get detailed information about layers</li>
+                        <li><strong>Click:</strong> Select specific layers for detailed view</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="js/CNNVisualizer.js"></script>
+    <script src="js/LayerComponents.js"></script>
+    <script src="js/AnimationEngine.js"></script>
+    <script src="js/UIController.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
